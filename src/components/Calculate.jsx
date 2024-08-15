@@ -1,32 +1,33 @@
 import { useSelector, useDispatch } from "react-redux";
 
+import { calculatorActions } from "../store/store";
+
 export default function Calculate() {
   const dispatch = useDispatch();
 
-  const amount = useSelector((state) => state.amount);
+  const amount = useSelector((state) => state.calculator.amount);
 
-  const term = useSelector((state) => state.term);
+  const term = useSelector((state) => state.calculator.term);
 
-  const rate = useSelector((state) => state.rate);
+  const rate = useSelector((state) => state.calculator.rate);
 
-  const type = useSelector((state) => state.type);
+  const type = useSelector((state) => state.calculator.type);
 
   const p = amount;
   const r = rate / 100 / 12; // Monthly interest rate
   const n = term * 12; // Total number of payments
 
   const calculateHandler = () => {
-    if (type === "repayment")
-      dispatch({
-        type: "updateMonthly",
-        payload: (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1),
-      });
-    else if (type === "interest") {
-      dispatch({
-        type: "updateMonthly",
-        payload: p * r,
-      });
-    } else return;
+    if (type === "repayment") {
+      const monthlyPayment =
+        (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+      dispatch(calculatorActions.updateMonthly(monthlyPayment));
+    } else if (type === "interest") {
+      const monthlyInterest = p * r;
+      dispatch(calculatorActions.updateMonthly(monthlyInterest));
+    } else {
+      return;
+    }
 
     console.log(type);
   };

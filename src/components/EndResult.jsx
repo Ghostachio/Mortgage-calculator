@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 
 export default function EndResult() {
-  const monthly = useSelector((state) => state.monthly);
-  const term = useSelector((state) => state.term);
+  const monthly = useSelector((state) => state.calculator.monthly);
+  const term = useSelector((state) => state.calculator.term);
 
   const total = (monthly * term).toFixed(2);
   return (

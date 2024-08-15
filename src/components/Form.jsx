@@ -1,25 +1,28 @@
 import { useSelector, useDispatch } from "react-redux";
 
+import { calculatorActions } from "../store/store";
+
 export default function Form() {
   const dispatch = useDispatch();
 
-  const amount = useSelector((state) => state.amount);
-  const term = useSelector((state) => state.term);
-  const rate = useSelector((state) => state.rate);
-  const type = useSelector((state) => state.type);
+  const amount = useSelector((state) => state.calculator.amount);
+  const term = useSelector((state) => state.calculator.term);
+  const rate = useSelector((state) => state.calculator.rate);
+  const type = useSelector((state) => state.calculator.type);
 
   // updating functions
   const amountHandler = (e) => {
-    dispatch({ type: "updateAmount", payload: e.target.value });
+    dispatch(calculatorActions.updateAmount(e.target.value));
+    console.log(amount);
   };
   const termHandler = (e) => {
-    dispatch({ type: "updateTerm", payload: e.target.value });
+    dispatch(calculatorActions.updateTerm(e.target.value));
   };
   const rateHandler = (e) => {
-    dispatch({ type: "updateRate", payload: e.target.value });
+    dispatch(calculatorActions.updateRate(e.target.value));
   };
   const typeHandler = (paymentType) => {
-    dispatch({ type: "updateType", payload: paymentType });
+    dispatch(calculatorActions.updateType(paymentType));
   };
 
   return (
